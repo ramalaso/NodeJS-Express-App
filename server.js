@@ -27,6 +27,10 @@ app.locals.siteName = 'ROUX Meetups';
 
 app.use(express.static(path.join(__dirname, '/static')));
 
+app.get('/error', (req, res, next) => {
+  res.render('error');
+});
+
 app.use(async (req, res, next) => {
   try {
     const names = await speakerService.getNames();
@@ -45,6 +49,10 @@ app.use(
     speakerService,
   })
 );
+
+app.use((error, req, res, next) => {
+  res.render('error');
+});
 
 app.listen(port, () => {
   console.log('App listening on port 3000!');
