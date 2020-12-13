@@ -9,13 +9,16 @@ module.exports = (params) => {
     // if (!req.session.visitcount) {
     //   req.session.visitcount = 0;
     // }
-
     // req.session.visitcount += 1;
-    const topSpeakers = await speakerService.getList();
-    console.log(topSpeakers);
-    console.log(`Number of visits: ${req.session.visitcount}`);
-    const allArt = await speakerService.getAllArtwork();
-    res.render('layout', { pageTitle: 'Welcome', template: 'index', topSpeakers, allArt });
+    try {
+      const topSpeakers = await speakerService.getList();
+      console.log(topSpeakers);
+      console.log(`Number of visits: ${req.session.visitcount}`);
+      const allArt = await speakerService.getAllArtwork();
+      return res.render('layout', { pageTitle: 'Welcome', template: 'index', topSpeakers, allArt });
+    } catch (error) {
+      return next(error);
+    }
   });
   router.use('/speakers', speakerRoute(params));
   router.use('/feedback', feedbackRoute(params));

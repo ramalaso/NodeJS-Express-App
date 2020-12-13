@@ -21,6 +21,9 @@ app.use(
     keys: ['ramalaso', '4514812'],
   })
 );
+
+app.use(express.urlencoded({ extended: true }));
+
 app.set('view engine', 'ejs');
 
 app.locals.siteName = 'ROUX Meetups';
